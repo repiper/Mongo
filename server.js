@@ -1,10 +1,8 @@
 // DEPENDENCIES
 const express = require("express");
 const bodyParser = require("body-parser");
-const logger = require("morgan");
 const mongoose = require("mongoose");
 const exphbs = require('express-handlebars');
-const methodOverride = require('method-override');
 const request = require("request");
 const cheerio = require("cheerio");
 
@@ -12,18 +10,17 @@ const cheerio = require("cheerio");
 const PORT = process.env.PORT || 8000;
 const app = express();
 
-app.use(logger("dev"));
 app.use(bodyParser.urlencoded({
     extended: false
 }));
 app.use(express.static("public"));
-app.use(methodOverride("_method"));
+
 
 // DB SETUP
 var Note = require("./models/Note.js");
 var Article = require("./models/Article.js");
 mongoose.Promise = Promise;
-mongoose.connect("mongodb://heroku_4mndt0fx:t8pg6snbn99vari2i1ar3p5cfv@ds139430.mlab.com:39430/heroku_4mndt0fx");
+mongoose.connect("https://mongo-scrape-app.herokuapp.com");
 const db = mongoose.connection;
 db.on("error", (error) => {
     console.log("Mongoose Error: ", error);
